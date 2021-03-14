@@ -57,3 +57,15 @@ And `touch` a file called ssh:
 % touch ssh
 ```
 This will enable ssh on port 22 on the RPi.
+
+# Fix SSH host key:
+After installing a fresh OS on the RPi, you might experience a **Host key verification failed** error when trying to SSH.
+
+Reset the keys with `ssh-keygen` to fix the issue:
+```
+% ssh-keygen -R RPi_IP_ADDRESS
+
+# Host RPi_IP_ADDRESS found: line 3
+/Users/USER/.ssh/known_hosts updated.
+Original contents retained as /Users/USER/.ssh/known_hosts.old
+```
