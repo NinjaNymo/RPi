@@ -69,3 +69,32 @@ Reset the keys with `ssh-keygen` to fix the issue:
 /Users/USER/.ssh/known_hosts updated.
 Original contents retained as /Users/USER/.ssh/known_hosts.old
 ```
+
+# First time setup:
+SSH into the RPi as the pi user. The default password will be raspberry.
+
+**Change the pi password** using `passwd`:
+```
+$ passwd
+
+passwd: password updated successfully
+```
+
+**Set the time-zone** with `timedatectl`:
+```
+$ sudo timedatectl set-timezone Europe/Oslo
+```
+
+You can list the avaliable ones with `timedatectl list-timezones`.
+
+**Update** everything:
+```
+$ sudo apt-get update
+```
+If you get a warning about "no space left on device" try rebooting with `sudo reboot`.
+
+**Upgrade** everything (should termineate with `done.`):
+```
+$ sudo apt-get upgrade
+```
+ 
