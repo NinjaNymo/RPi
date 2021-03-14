@@ -97,4 +97,21 @@ If you get a warning about "no space left on device" try rebooting with `sudo re
 ```
 $ sudo apt-get upgrade
 ```
- 
+# Customize the hostname:
+Use `hostnamectl`to set the hostname to "rpi4" or whatever:
+
+```
+$ sudo hostnamectl set-hostname rpi4
+```
+Edit /etc/hosts with ´nano´ and replace "raspberry" following "127.0.1.1" with "rpi4":
+```
+$ sudo nano /etc/hosts
+
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+127.0.1.1       rpi4
+```
+Reboot the system with `sudo reboot`.
