@@ -93,7 +93,7 @@ $ sudo apt-get update
 ```
 If you get a warning about "no space left on device" try rebooting with `sudo reboot`.
 
-**Upgrade** everything (should termineate with `done.`):
+**Upgrade** everything (should terminate with `done.`):
 ```
 $ sudo apt-get upgrade
 ```
