@@ -6,6 +6,8 @@ Notes for initializing and maintaning my RPi server.
 
 [[2] Initial Server Setup with Debian 10](https://www.snel.com/support/initial-server-setup-with-debian-10/)
 
+[[3] External storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)
+
 # Creating the SD-card image:
 Download the latest Raspberry Pi OS image .zip from [raspberrypi.org](https://www.raspberrypi.org/software/operating-systems/) and **extract the image .zip** to get the image .img.
 
@@ -97,7 +99,7 @@ If you get a warning about "no space left on device" try rebooting with `sudo re
 ```
 $ sudo apt-get upgrade
 ```
-# Customize the hostname:
+# Customize the hostname [[2]](https://www.snel.com/support/initial-server-setup-with-debian-10/):
 Use `hostnamectl`to set the hostname to "rpi4" or whatever:
 
 ```
@@ -115,3 +117,44 @@ ff02::2         ip6-allrouters
 127.0.1.1       rpi4
 ```
 Reboot the system with `sudo reboot`.
+
+# External Storage [[3]](https://www.raspberrypi.org/documentation/configuration/external-storage.md):
+**Create mount points** with `mkdir`:
+```
+$ sudo mkdir /mnt/ext_hdd
+$ sudo mkdir /mnt/nas_hdd
+```
+**Identify** storage with `fdisk`:
+```
+$ sudo fdisk -l
+
+Disk /dev/sda: 1.8 TiB, 2000398933504 bytes, 3907029167 sectors
+...
+Disk /dev/sdb: 3.7 TiB, 4000787030016 bytes, 7814037168 sectors
+```
+Find the **UUID** of the storage using `blkid`:
+```
+$ sudo blkid
+
+/dev/sda1: UUID="UUID_A" TYPE="ext4" PARTUUID="PUUID_A"
+/dev/sdb1: UUID="UUID_B" TYPE="ext4" PARTLABEL="primary" PARTUUID="PUUID_B"
+```
+
+**Edit fstab** with `nano`. Add two new entries for the storage using the UUIDs (w/o " "):
+```
+$ sudo nano /etc/fstab
+
+# 2TB Ext HDD:
+UUID=UUID_A /mnt/ext_hdd ext4 defaults,auto,users,rw,nofail 0 0
+# 4TB NAS HDD:
+UUID=UUID_B /mnt/nas_hdd ext4 defaults,auto,users,rw,nofail 0 0
+```
+
+Reboot and verify that storage was mounted with `df`:
+```
+$ df -h
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.8T  1.7T   91G  95% /mnt/ext_hdd
+/dev/sdb1       3.6T  1.8T  1.7T  52% /mnt/nas_hdd
+```
