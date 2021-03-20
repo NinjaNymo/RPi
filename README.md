@@ -8,6 +8,8 @@ Notes for initializing and maintaning my RPi server.
 
 [[3] External storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)
 
+[[4] Plex installation on Pi 4B 4GB Raspbian Buster](https://www.reddit.com/r/raspberry_pi/comments/e5l70l/plex_installation_on_pi_4b_4gb_raspbian_buster/)
+
 # Creating the SD-card image:
 Download the latest Raspberry Pi OS image .zip from [raspberrypi.org](https://www.raspberrypi.org/software/operating-systems/) and **extract the image .zip** to get the image .img.
 
@@ -157,4 +159,36 @@ $ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/sda1       1.8T  1.7T   91G  95% /mnt/ext_hdd
 /dev/sdb1       3.6T  1.8T  1.7T  52% /mnt/nas_hdd
+```
+
+# Plex [[4]](https://www.reddit.com/r/raspberry_pi/comments/e5l70l/plex_installation_on_pi_4b_4gb_raspbian_buster/):
+
+Add the https transport protocol:
+```
+$ sudo apt-get install apt-transport-https
+```
+
+Add the official Plex package keys:
+```
+$ curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
+```
+
+Add the Plex repository:
+```
+$ echo deb https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+
+deb https://downloads.plex.tv/repo/deb public main
+```
+
+Update repositories:
+```
+$ sudo apt-get update
+
+...
+Reading package lists... Done
+```
+
+And install Plex:
+```
+$ sudo apt-get install plexmediaserver
 ```
