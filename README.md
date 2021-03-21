@@ -10,6 +10,8 @@ Notes for initializing and maintaning my RPi server.
 
 [[4] Plex installation on Pi 4B 4GB Raspbian Buster](https://www.reddit.com/r/raspberry_pi/comments/e5l70l/plex_installation_on_pi_4b_4gb_raspbian_buster/)
 
+[[5] How to Install Python 3.8 on Debian 10](https://linuxize.com/post/how-to-install-python-3-8-on-debian-10/)
+
 # Creating the SD-card image:
 Download the latest Raspberry Pi OS image .zip from [raspberrypi.org](https://www.raspberrypi.org/software/operating-systems/) and **extract the image .zip** to get the image .img.
 
@@ -191,4 +193,59 @@ Reading package lists... Done
 And install Plex:
 ```
 $ sudo apt-get install plexmediaserver
+```
+
+# Installing Python 3.8 [[5]](https://linuxize.com/post/how-to-install-python-3-8-on-debian-10/):
+Update and install dependencies for **building Python**:
+```
+$ sudo apt update
+
+$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev
+```
+
+Go to the [Python website](https://www.python.org/downloads/source/) to find a link for the source tarball such as:
+```
+https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tgz
+```
+
+Download the tarball with `wget`:
+```
+$ sudo wget https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tgz
+```
+
+Extract it with `tar`:
+```
+$ sudo tar xzf Python-3.8.8.tgz
+```
+
+`cd` into the Python folder:
+```
+$ cd Python-3.8.8
+```
+
+Enable some optimizations:
+```
+$ ./configure --enable-optimizations
+```
+
+Run the alternative install script to avoid overwriting excisting Python versions:
+```
+$ sudo make altinstall
+```
+Note that this might take a while.
+
+Verify the installation:
+```
+$ python3.8 -V
+
+Python 3.8.8
+```
+
+Do some cleanup:
+```
+$ cd ..
+
+$ sudo rm -R Python-3.8.8
+
+$ sudo rm Python-3.8.8.tgz 
 ```
