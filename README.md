@@ -192,3 +192,37 @@ And install Plex:
 ```
 $ sudo apt-get install plexmediaserver
 ```
+# Transmission:
+Do the regular update:
+```
+$ sudo apt-get update
+```
+
+Install `transmission-daemon`:
+```
+$ sudo apt-get install transmission-daemon
+```
+
+Stop the service:
+```
+$ sudo service transmission-daemon stop
+```
+
+Edit the config with `nano`:
+```
+$ sudo nano /etc/transmission-daemon/settings.json
+```
+
+Here we can leave most things default, but change:
+
+1. Set `"dht-enabled": false` to disable DHT.
+2. Set `"pex-enabled": false` to disable PEX.
+3. Set `"download-dir"` to the default download dir.
+4. Set `"rpc-whitelist-enabled": false` to allow anyone to connect remotely.
+   - Be extremely aware that the RPC port should NOT be opened on your firewall/router.
+5. Set `"rpc-authentication-required": false` to disable the RPC password.
+
+Start transmission back up:
+```
+$ sudo service transmission-daemon start
+```
