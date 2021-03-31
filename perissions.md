@@ -47,6 +47,11 @@ users:x:100:pi
 |----------------- Group name
 ```
 
+Groups are added with `groupadd` and the GID can optionally be specified with `-g`:
+```
+groupadd -g 420 dankgroup
+```
+
 # Permissions
 
 View ownership the files in the current directory:
@@ -92,9 +97,36 @@ Note that if `foo` or `bar` is a directory, you will only change the directory i
 sudo chown -R USER foo_dir
 ```
 
-Now for the difficult part. Changing the mode with `chmod`. You hgave the following _operators_:
+Now for the difficult part. Changing the mode with `chmod`. 
 
-- 
+You have the following _operators_:
+
+- `-` : Remove
+- `+` : Add
+- `=` : Set
+
+Which can be used on the following _permission types_:
+
+- `u` : User
+- `g` : Group
+- `o` : Other
+
+You can set the three _permissions_:
+
+- `r` : Read
+- `w` : Write
+- `x` : Execute
+
+Which you can use as follows:
+
+```
+chmod u+rw someFileOrDir   # Add read/write permissions to the permissions the user already has
+
+chmod go-rwx someFileOrDir # Remove read/write/execute permissions for both group and other
+
+chmod ug=rw someFileOrDir  # Set permissions to read/write for both group and other
+```
+Simple.
 
 
 # Setting up groups:
